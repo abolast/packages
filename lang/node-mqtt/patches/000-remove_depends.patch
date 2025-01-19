@@ -1,10 +1,12 @@
 --- a/package.json
 +++ b/package.json
-@@ -76,7 +76,6 @@
+@@ -125,8 +125,7 @@
      "reinterval": "^1.1.0",
      "rfdc": "^1.3.0",
-     "split2": "^3.1.0",
--    "ws": "^7.5.5",
-     "xtend": "^4.0.2"
+     "split2": "^4.2.0",
+-    "worker-timers": "^7.1.4",
+-    "ws": "^8.17.1"
++    "worker-timers": "^7.1.4"
    },
    "devDependencies": {
+     "@esm-bundle/chai": "^4.3.4-fix.0",

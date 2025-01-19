@@ -8,12 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libmad
-PKG_VERSION:=0.16.2
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=0.16.4
+PKG_RELEASE:=3
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/tenacityteam/libmad/tar.gz/$(PKG_VERSION)?
-PKG_HASH:=6c14c2f4dcf7fd32e447eef99d6c53faded52e22f95e223e6f58844030851b99
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_VERSION:=$(PKG_VERSION)
+PKG_SOURCE_URL:=https://codeberg.org/tenacityteam/libmad
+PKG_MIRROR_HASH:=6a9cca07873ed6e7ace90652cc681d825260bd2866f2f92673b39dcd99523c3c
 
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 PKG_LICENSE:=GPL-2.0-or-later
@@ -21,7 +22,7 @@ PKG_LICENSE_FILES:=COPYING
 PKG_CPE_ID:=cpe:/a:underbit:mad_libmad
 
 CMAKE_INSTALL:=1
-PKG_USE_MIPS16:=0
+PKG_BUILD_FLAGS:=no-mips16
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk

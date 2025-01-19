@@ -5,33 +5,31 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dos2unix
-PKG_VERSION:=7.4.3
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=7.5.2
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://waterlan.home.xs4all.nl/dos2unix/ \
                 @SF/dos2unix
-PKG_HASH:=b68db41956daf933828423aa30510e00c12d29ef5916e715e8d4e694fe66ca72
+PKG_HASH:=264742446608442eb48f96c20af6da303cb3a92b364e72cb7e24f88239c4bf3a
 
 PKG_MAINTAINER:=Tianling Shen <cnsztl@immortalwrt.org>
 PKG_LICENSE:=BSD-2-Clause
-PKG_LICENSE_FILE:=COPYING.txt
+PKG_LICENSE_FILES:=COPYING.txt
 
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-MAKE_FLAGS+= \
-	D2U_OS=Linux \
-	ENABLE_NLS=
+MAKE_FLAGS+= D2U_OS=Linux ENABLE_NLS=
 
 define dos2unix/template
   define Package/$(1)
     SECTION:=utils
     CATEGORY:=Utilities
     TITLE:=Text file format converters ($(1))
-    URL:=http://waterlan.home.xs4all.nl/dos2unix.html
+    URL:=https://waterlan.home.xs4all.nl/dos2unix.html
     PROVIDES:=$(2)
   endef
 
