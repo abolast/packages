@@ -1,8 +1,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=oci-runtime-tools
-PKG_VERSION:=1.0.0-pre20210326
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=1.0.0.20210326
+PKG_RELEASE:=4
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
@@ -11,13 +11,13 @@ PKG_SOURCE_NAME:=runtime-tools
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/opencontainers/runtime-tools.git
 PKG_SOURCE_VERSION:=59cdde06764be8d761db120664020f0415f36045
-PKG_MIRROR_HASH:=ef331e3ad5f99220583399fe1c2ded243f4b01f8dabc7acd152d46304da70f6f
+PKG_MIRROR_HASH:=661cb4664f45a169ca4f8e33fd00b69734328c7fb8c3880a48c7a67105bc8520
 
 PKG_MAINTAINER:=Daniel Golle <daniel@makrotopia.org>
 
 PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
-PKG_USE_MIPS16:=0
+PKG_BUILD_FLAGS:=no-mips16
 
 GO_PKG:=github.com/opencontainers/runtime-tools/
 GO_PKG_LDFLAGS_X:=main.gitCommit=$(PKG_SOURCE_VERSION) main.version=$(PKG_SOURCE_VERSION)
