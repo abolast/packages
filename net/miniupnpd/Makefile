@@ -8,15 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=miniupnpd
-
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/miniupnp/miniupnp.git
-PKG_SOURCE_DATE:=2022-08-31
-PKG_SOURCE_VERSION:=68c8ec508a421f4f4af67a63e3eb6f497d2531e1
-PKG_MIRROR_HASH:=68a3170ec73149c4cf4855b1ce6e031557cc12bff85a58421bb94785daaf225d
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)/miniupnpd
-
+PKG_VERSION:=2.3.7
 PKG_RELEASE:=1
+
+PKG_SOURCE_URL:=https://miniupnp.tuxfamily.org/files
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_HASH:=fbdd5501039730f04a8420ea2f8f54b7df63f9f04cde2dc67fa7371e80477bbe
 
 PKG_MAINTAINER:=
 PKG_LICENSE:=BSD-3-Clause
@@ -29,9 +26,6 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/version.mk
 
-TAR_OPTIONS+= --strip-components 1
-TAR_CMD=$(HOST_TAR) -C $(1)/.. $(TAR_OPTIONS)
-
 define Package/miniupnpd/Default
   SECTION:=net
   CATEGORY:=Network
@@ -40,7 +34,7 @@ define Package/miniupnpd/Default
 	+libmnl \
 	+libuuid
   PROVIDES:=miniupnpd
-  TITLE:=Lightweight UPnP IGD, NAT-PMP & PCP daemon
+  TITLE:=Lightweight UPnP IGD & PCP/NAT-PMP daemon
   SUBMENU:=Firewall
   URL:=https://miniupnp.tuxfamily.org/
 endef
@@ -85,7 +79,8 @@ CONFIGURE_ARGS = \
 	--leasefile \
 	--portinuse \
 	--firewall=$(BUILD_VARIANT) \
-	--disable-fork
+	--disable-fork \
+	--regex
 
 TARGET_CFLAGS += $(FPIC)
 TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed
@@ -115,10 +110,6 @@ endef
 
 define Package/miniupnpd-nftables/install
 	$(call Package/miniupnpd/install/Default,$1)
-	$(INSTALL_DIR) $(1)/etc/uci-defaults
-	$(INSTALL_DIR) $(1)/usr/share/miniupnpd
-	$(INSTALL_BIN) ./files/miniupnpd.defaults.nftables $(1)/etc/uci-defaults/99-miniupnpd
-	$(INSTALL_DATA) ./files/firewall4.include $(1)/usr/share/miniupnpd/firewall.include
 	$(INSTALL_DIR) $(1)/usr/share/nftables.d
 	$(CP) ./files/nftables.d/* $(1)/usr/share/nftables.d/
 endef

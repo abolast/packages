@@ -4,7 +4,7 @@
    ],
    "dependencies": {
      "@serialport/binding-mock": "10.2.2",
--    "@serialport/bindings-cpp": "10.7.0",
-     "@serialport/parser-byte-length": "10.3.0",
-     "@serialport/parser-cctalk": "10.3.0",
-     "@serialport/parser-delimiter": "10.3.0",
+-    "@serialport/bindings-cpp": "13.0.0",
+     "@serialport/parser-byte-length": "13.0.0",
+     "@serialport/parser-cctalk": "13.0.0",
+     "@serialport/parser-delimiter": "13.0.0",
