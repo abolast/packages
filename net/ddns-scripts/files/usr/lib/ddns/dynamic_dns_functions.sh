@@ -72,7 +72,7 @@ IPV6_REGEX="\(\([0-9A-Fa-f]\{1,4\}:\)\{1,\}\)\(\([0-9A-Fa-f]\{1,4\}\)\{0,1\}\)\(
 SHELL_ESCAPE="[\"\'\`\$\!();><{}?|\[\]\*\\\\]"
 
 # dns character set. "-" must be the last character
-DNS_CHARSET="[@a-zA-Z0-9._-]"
+DNS_CHARSET="[@a-zA-Z0-9.:_-]"
 
 # domains can have * for wildcard. "-" must be the last character
 DNS_CHARSET_DOMAIN="[@a-zA-Z0-9._*-]"
@@ -547,8 +547,11 @@ verify_host_port() {
 			return 2
 		}
 		# extract IP address
-		if [ -n "$BIND_HOST" -o -n "$KNOT_HOST" ]; then	# use BIND host or Knot host if installed
+		if [ -n "$BIND_HOST" ]; then	# use BIND host if installed
 			__IPV4="$(awk -F "address " '/has address/ {print $2; exit}' "$DATFILE")"
+			__IPV6="$(awk -F "address " '/has IPv6/ {print $2; exit}' "$DATFILE")"
+		elif [ -n "$KNOT_HOST" ]; then	# use Knot host if installed
+			__IPV4="$(awk -F "address " '/has IPv4/ {print $2; exit}' "$DATFILE")"
 			__IPV6="$(awk -F "address " '/has IPv6/ {print $2; exit}' "$DATFILE")"
 		elif [ -n "$DRILL" ]; then	# use drill if installed
 			__IPV4="$(awk '/^'"$__HOST"'/ {print $5}' "$DATFILE" | grep -m 1 -o "$IPV4_REGEX")"
@@ -959,10 +962,17 @@ get_current_ip () {
 					# 5: eth1    inet6 fd43:5368:6f6d:6500:a00:27ff:fed0:1032/64 scope global dynamic \       valid_lft 14352sec preferred_lft 14352sec
 					# 5: eth1    inet6 2002:b0c7:f326::a00:27ff:fed0:1032/64 scope global dynamic \       valid_lft 14352sec preferred_lft 14352sec
 
-					#    remove      remove     remove      replace     replace
-					#     link     inet6 fxxx    sec      forever=>-1   / => ' ' to separate subnet from ip
-					sed "/link/d; /inet6 f/d; s/sec//g; s/forever/-1/g; s/\// /g" $DATFILE | \
-						awk '{ print $3" "$4" "$NF }' > $ERRFILE	# temp reuse ERRFILE
+					if [ $upd_privateip -eq 0 ]; then
+						#    remove      remove     remove      replace     replace
+						#     link     inet6 fxxx    sec      forever=>-1   / => ' ' to separate subnet from ip
+						sed "/link/d; /inet6 f/d; s/sec//g; s/forever/-1/g; s/\// /g" $DATFILE | \
+							awk '{ print $3" "$4" "$NF }' > $ERRFILE	# temp reuse ERRFILE
+					else
+						#    remove                 remove      replace     replace
+						#     link                   sec      forever=>-1   / => ' ' to separate subnet from ip
+						sed "/link/d; s/sec//g; s/forever/-1/g; s/\// /g" $DATFILE | \
+							awk '{ print $3" "$4" "$NF }' > $ERRFILE	# temp reuse ERRFILE
+					fi
 					# we only need    inet?   IP  prefered time
 
 					local __TIME4=0;  local __TIME6=0

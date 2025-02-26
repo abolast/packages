@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
-# Copyright (C) 2021 ImmortalWrt.org
+# Copyright (C) 2021-2022 ImmortalWrt.org
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gallery-dl
-PKG_VERSION:=1.21.2
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=1.27.1
+PKG_RELEASE:=1
 
 PYPI_NAME:=gallery_dl
-PKG_HASH:=c67f98f163881face41313b764dc9add907087dd284a34a4d34c5f3b4736dd3a
+PKG_HASH:=4b5445d05349fe8293c2af525d720e9ea04856218860156ec4f8d5ffa7db795f
 
 PKG_LICENSE:=GPL-2.0-only
 PKG_LICENSE_FILES:=LICENSE

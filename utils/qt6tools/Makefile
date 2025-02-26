@@ -3,21 +3,21 @@
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
-# 
+#
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt6tools
-PKG_BASE:=6.3
+PKG_BASE:=6.8
 PKG_BUGFIX:=2
 PKG_VERSION:=$(PKG_BASE).$(PKG_BUGFIX)
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=1
 
 PKG_SOURCE:=qttools-everywhere-src-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://mirrors.tencent.com/qt/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/ \
 		  https://mirrors.aliyun.com/qt/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/ \
 		  http://download.qt-project.org/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/
-PKG_HASH:=e5b07d2ffab68cebe935972506c88ffe1e4b7d24bdc28c67578dbc075799aed2
+PKG_HASH:=326381b7d43f07913612f291abc298ae79bd95382e2233abce982cff2b53d2c0
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/qttools-everywhere-src-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
@@ -39,6 +39,7 @@ define Package/qt6tools
   SUBMENU:=Qt6
   TITLE:=Qt6 Tools
   URL:=http://qt-project.org
+  BUILDONLY:=1
   HIDDEN:=1
 endef
 

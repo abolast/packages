@@ -8,16 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt6base
-PKG_BASE:=6.3
+PKG_BASE:=6.8
 PKG_BUGFIX:=2
 PKG_VERSION:=$(PKG_BASE).$(PKG_BUGFIX)
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=1
 
 PKG_SOURCE:=qtbase-everywhere-src-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://mirrors.tencent.com/qt/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/ \
 		  https://mirrors.aliyun.com/qt/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/ \
 		  http://download.qt-project.org/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/
-PKG_HASH:=7929ba4df870b6b30870bc0aed2525cfc606ed7091107b23cf7ed7e434caa9a6
+PKG_HASH:=012043ce6d411e6e8a91fdc4e05e6bedcfa10fcb1347d3c33908f7fdd10dfe05
 
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/qtbase-everywhere-src-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/qtbase-everywhere-src-$(PKG_VERSION)
@@ -29,7 +29,7 @@ PKG_CPE_ID:=cpe:/a:qt:qt
 
 PKG_BUILD_DEPENDS:=qt6base/host
 PKG_BUILD_PARALLEL:=1
-PKG_USE_MIPS16:=0
+PKG_BUILD_FLAGS:=no-mips16
 CMAKE_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -44,7 +44,7 @@ define Package/libQt6/Default
   SUBMENU:=Qt6
   TITLE:=Qt6
   URL:=http://qt-project.org
-  DEPENDS:=@!arc +libatomic +libdouble-conversion +libstdcpp +zlib
+  DEPENDS:=@!(arc||TARGET_gemini) +libatomic +libdouble-conversion +libstdcpp +zlib
 endef
 
 define Package/libQt6
@@ -58,7 +58,7 @@ endef
 TARGET_CFLAGS+= -I$(STAGING_DIR)/usr/include/libdrm
 ifdef CONFIG_USE_GLIBC
   ifeq ($(ARCH),x86_64)
-    TARGET_LDFLAGS+= -Wl,--sysroot=$(TOOLCHAIN_DIR)
+    TARGET_LDFLAGS+= -Wl,--sysroot=$(TOOLCHAIN_ROOT_DIR)
   endif
 endif
 
@@ -103,6 +103,7 @@ CMAKE_OPTIONS+= \
 	-DFEATURE_gui=$(if $(CONFIG_PACKAGE_libQt6Gui),ON,OFF) \
 	-DFEATURE_fontconfig=OFF \
 	-DFEATURE_system_freetype=ON \
+	-DFEATURE_xkbcommon=OFF \
 	-DFEATURE_accessibility=OFF \
 	-DFEATURE_harfbuzz=OFF \
 	-DFEATURE_gif=OFF \

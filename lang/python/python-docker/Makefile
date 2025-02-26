@@ -1,21 +1,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=python-docker
-PKG_VERSION:=6.0.0
+PKG_VERSION:=7.0.0
 PKG_RELEASE:=1
 
 PYPI_NAME:=docker
-PKG_HASH:=19e330470af40167d293b0352578c1fa22d74b34d3edf5d4ff90ebc203bbb2f1
+PKG_HASH:=323736fb92cd9418fc5e7133bc953e11a9da04f4483f828b527db553f1e7e5a3
 
 PKG_MAINTAINER:=Javier Marcet <javier@marcet.info>
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_CPE_ID:=cpe:/a:docker:docker-py
+
+PKG_BUILD_DEPENDS:=python-setuptools-scm/host
 
 include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
-
-PYTHON3_PKG_SETUP_ARGS:=
 
 define Package/python3-docker
   SECTION:=lang

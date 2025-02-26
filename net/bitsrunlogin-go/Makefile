@@ -5,21 +5,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=BitSrunLoginGo
-PKG_VERSION:=3.3
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=1.6.5
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/Mmx233/BitSrunLoginGo/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=ec28cec7d9ac60b78ae5d3ac2f6ab1746466a34a808a5240a6b74ab1dc40a66e
+PKG_HASH:=1777adce3ca2815295dcb09294ffda2df4304d7157b7b90c15b354b48eed32d8
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
-PKG_USE_MIPS16:=0
+PKG_BUILD_FLAGS:=no-mips16
 
 GO_PKG:=github.com/Mmx233/BitSrunLoginGo
+GO_PKG_BUILD_PKG:=github.com/Mmx233/BitSrunLoginGo/cmd/bitsrun/
 
 include $(INCLUDE_DIR)/package.mk
 include ../../lang/golang/golang-package.mk
@@ -41,7 +42,7 @@ define Package/bitsrunlogin-go/install
 	$(call GoPackage/Package/Install/Bin,$(PKG_INSTALL_DIR))
 
 	$(INSTALL_DIR) $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/BitSrunLoginGo $(1)/usr/bin/bitsrunlogin-go
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/bitsrun $(1)/usr/bin/bitsrunlogin-go
 
 	$(INSTALL_DIR) $(1)/etc/config $(1)/etc/init.d
 	$(INSTALL_CONF) $(CURDIR)/files/bitsrunlogin-go.config $(1)/etc/config/bitsrunlogin-go
